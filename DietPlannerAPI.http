@@ -1,0 +1,30 @@
+@DietPlannerAPI_HostAddress = http://localhost:5278
+
+GET {{DietPlannerAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{DietPlannerAPI_HostAddress}}/api/meals
+Content-Type: application/json
+
+{
+  "name": "Kanapki",
+  "description": "Lekki posiłek"
+}
+
+###
+
+PUT {{DietPlannerAPI_HostAddress}}/api/meals/1
+Content-Type: application/json
+
+{
+  "name": "Sałatka premium",
+  "description": "Lepsza wersja"
+}
+
+###
+
+DELETE {{DietPlannerAPI_HostAddress}}/api/meals/1
+
+###

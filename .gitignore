@@ -1,0 +1,17 @@
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Local settings
+appsettings.Development.json
+
+# Nested mobile app repository
+DietPlannerMobile/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
