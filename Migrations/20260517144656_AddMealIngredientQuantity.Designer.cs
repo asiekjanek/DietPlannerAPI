@@ -4,6 +4,7 @@ using DietPlannerAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietPlannerAPI.Migrations
 {
     [DbContext(typeof(DietPlannerDbContext))]
-    partial class DietPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260517144656_AddMealIngredientQuantity")]
+    partial class AddMealIngredientQuantity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -597,7 +600,7 @@ namespace DietPlannerAPI.Migrations
                         {
                             Id = 1,
                             DietitianId = 1,
-                            IsAvailable = false,
+                            IsAvailable = true,
                             StartTime = new DateTime(2026, 5, 10, 10, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -613,41 +616,6 @@ namespace DietPlannerAPI.Migrations
                             DietitianId = 2,
                             IsAvailable = true,
                             StartTime = new DateTime(2026, 5, 11, 9, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DietitianId = 1,
-                            IsAvailable = true,
-                            StartTime = new DateTime(2026, 5, 12, 10, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DietitianId = 2,
-                            IsAvailable = true,
-                            StartTime = new DateTime(2026, 5, 12, 16, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 6,
-                            DietitianId = 1,
-                            IsAvailable = true,
-                            StartTime = new DateTime(2026, 5, 13, 11, 30, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 7,
-                            DietitianId = 2,
-                            IsAvailable = true,
-                            StartTime = new DateTime(2026, 5, 14, 14, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 8,
-                            DietitianId = 1,
-                            IsAvailable = true,
-                            StartTime = new DateTime(2026, 5, 15, 9, 30, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 

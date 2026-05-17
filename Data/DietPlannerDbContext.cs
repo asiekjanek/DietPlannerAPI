@@ -39,6 +39,10 @@ namespace DietPlannerAPI.Data
                 .WithMany(i => i.MealIngredients)
                 .HasForeignKey(mi => mi.IngredientId);
 
+            modelBuilder.Entity<MealIngredient>()
+                .Property(mi => mi.QuantityGrams)
+                .HasPrecision(8, 2);
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Śniadanie" },
                 new Category { Id = 2, Name = "Obiad" },
@@ -83,11 +87,11 @@ namespace DietPlannerAPI.Data
             );
 
             modelBuilder.Entity<MealIngredient>().HasData(
-                new MealIngredient { MealId = 1, IngredientId = 1 },
-                new MealIngredient { MealId = 1, IngredientId = 2 },
-                new MealIngredient { MealId = 2, IngredientId = 3 },
-                new MealIngredient { MealId = 2, IngredientId = 4 },
-                new MealIngredient { MealId = 3, IngredientId = 5 }
+                new MealIngredient { MealId = 1, IngredientId = 1, QuantityGrams = 70m },
+                new MealIngredient { MealId = 1, IngredientId = 2, QuantityGrams = 120m },
+                new MealIngredient { MealId = 2, IngredientId = 3, QuantityGrams = 150m },
+                new MealIngredient { MealId = 2, IngredientId = 4, QuantityGrams = 100m },
+                new MealIngredient { MealId = 3, IngredientId = 5, QuantityGrams = 120m }
             );
 
             modelBuilder.Entity<DietPlan>().HasData(
@@ -107,9 +111,14 @@ namespace DietPlannerAPI.Data
             );
 
             modelBuilder.Entity<TimeSlot>().HasData(
-                new TimeSlot { Id = 1, StartTime = new DateTime(2026, 5, 10, 10, 0, 0), IsAvailable = true, DietitianId = 1 },
+                new TimeSlot { Id = 1, StartTime = new DateTime(2026, 5, 10, 10, 0, 0), IsAvailable = false, DietitianId = 1 },
                 new TimeSlot { Id = 2, StartTime = new DateTime(2026, 5, 10, 12, 0, 0), IsAvailable = true, DietitianId = 1 },
-                new TimeSlot { Id = 3, StartTime = new DateTime(2026, 5, 11, 9, 0, 0), IsAvailable = true, DietitianId = 2 }
+                new TimeSlot { Id = 3, StartTime = new DateTime(2026, 5, 11, 9, 0, 0), IsAvailable = true, DietitianId = 2 },
+                new TimeSlot { Id = 4, StartTime = new DateTime(2026, 5, 12, 10, 0, 0), IsAvailable = true, DietitianId = 1 },
+                new TimeSlot { Id = 5, StartTime = new DateTime(2026, 5, 12, 16, 0, 0), IsAvailable = true, DietitianId = 2 },
+                new TimeSlot { Id = 6, StartTime = new DateTime(2026, 5, 13, 11, 30, 0), IsAvailable = true, DietitianId = 1 },
+                new TimeSlot { Id = 7, StartTime = new DateTime(2026, 5, 14, 14, 0, 0), IsAvailable = true, DietitianId = 2 },
+                new TimeSlot { Id = 8, StartTime = new DateTime(2026, 5, 15, 9, 30, 0), IsAvailable = true, DietitianId = 1 }
             );
 
             modelBuilder.Entity<Appointment>().HasData(

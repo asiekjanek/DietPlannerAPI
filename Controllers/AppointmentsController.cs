@@ -45,6 +45,7 @@ namespace DietPlannerAPI.Controllers
         public async Task<ActionResult<Appointment>> AddAppointment(Appointment appointment)
         {
             _context.Appointments.Add(appointment);
+            await SetTimeSlotAvailability(appointment.DietitianId, appointment.AppointmentDate, false);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
@@ -58,6 +59,22 @@ namespace DietPlannerAPI.Controllers
                 return BadRequest();
             }
 
+            var currentAppointment = await _context.Appointments
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (currentAppointment == null)
+            {
+                return NotFound();
+            }
+
+            if (currentAppointment.DietitianId != appointment.DietitianId ||
+                currentAppointment.AppointmentDate != appointment.AppointmentDate)
+            {
+                await SetTimeSlotAvailability(currentAppointment.DietitianId, currentAppointment.AppointmentDate, true);
+            }
+
+            await SetTimeSlotAvailability(appointment.DietitianId, appointment.AppointmentDate, false);
             _context.Entry(appointment).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
@@ -75,9 +92,21 @@ namespace DietPlannerAPI.Controllers
             }
 
             _context.Appointments.Remove(appointment);
+            await SetTimeSlotAvailability(appointment.DietitianId, appointment.AppointmentDate, true);
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        private async Task SetTimeSlotAvailability(int dietitianId, DateTime appointmentDate, bool isAvailable)
+        {
+            var timeSlot = await _context.TimeSlots
+                .FirstOrDefaultAsync(ts => ts.DietitianId == dietitianId && ts.StartTime == appointmentDate);
+
+            if (timeSlot != null)
+            {
+                timeSlot.IsAvailable = isAvailable;
+            }
         }
     }
 }
