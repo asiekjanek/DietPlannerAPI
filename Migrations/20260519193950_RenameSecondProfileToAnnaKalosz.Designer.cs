@@ -4,6 +4,7 @@ using DietPlannerAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietPlannerAPI.Migrations
 {
     [DbContext(typeof(DietPlannerDbContext))]
-    partial class DietPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260519193950_RenameSecondProfileToAnnaKalosz")]
+    partial class RenameSecondProfileToAnnaKalosz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,8 +74,7 @@ namespace DietPlannerAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Bmi")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("MeasurementDate")
                         .HasColumnType("datetime2");
@@ -81,8 +83,7 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("WeightKg")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -327,8 +328,7 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TargetWeightKg")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserProfileId")
                         .HasColumnType("int");
@@ -392,24 +392,20 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Carbs")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Fat")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Protein")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Sugar")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -480,8 +476,7 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Carbs")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -491,20 +486,17 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Fat")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Protein")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Sugar")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -744,7 +736,7 @@ namespace DietPlannerAPI.Migrations
                             Age = 26,
                             DailyCalorieGoal = 1700,
                             DailyWaterGoalMl = 1800,
-                            Email = "kaloszkaaa@gmail.com",
+                            Email = "anna.kalosz@gmail.com",
                             FullName = "Anna Kalosz",
                             Gender = "Kobieta",
                             HeightCm = 170

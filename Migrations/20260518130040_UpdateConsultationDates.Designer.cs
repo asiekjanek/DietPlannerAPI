@@ -4,6 +4,7 @@ using DietPlannerAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietPlannerAPI.Migrations
 {
     [DbContext(typeof(DietPlannerDbContext))]
-    partial class DietPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260518130040_UpdateConsultationDates")]
+    partial class UpdateConsultationDates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,8 +74,7 @@ namespace DietPlannerAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Bmi")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("MeasurementDate")
                         .HasColumnType("datetime2");
@@ -81,8 +83,7 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("WeightKg")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -327,8 +328,7 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TargetWeightKg")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserProfileId")
                         .HasColumnType("int");
@@ -358,28 +358,6 @@ namespace DietPlannerAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DietPlannerAPI.Models.HabitCompletion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CompletionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GoalId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GoalId", "CompletionDate")
-                        .IsUnique();
-
-                    b.ToTable("HabitCompletions");
-                });
-
             modelBuilder.Entity("DietPlannerAPI.Models.Ingredient", b =>
                 {
                     b.Property<int>("Id")
@@ -392,24 +370,20 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Carbs")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Fat")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Protein")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Sugar")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -480,8 +454,7 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Carbs")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -491,20 +464,17 @@ namespace DietPlannerAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Fat")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Protein")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Sugar")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -692,22 +662,8 @@ namespace DietPlannerAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AccessCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Age")
                         .HasColumnType("int");
-
-                    b.Property<int>("DailyCalorieGoal")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DailyWaterGoalMl")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -728,11 +684,7 @@ namespace DietPlannerAPI.Migrations
                         new
                         {
                             Id = 1,
-                            AccessCode = "1234",
                             Age = 28,
-                            DailyCalorieGoal = 2000,
-                            DailyWaterGoalMl = 2000,
-                            Email = "jan.testowy@gmail.com",
                             FullName = "Jan Testowy",
                             Gender = "Mężczyzna",
                             HeightCm = 178
@@ -740,14 +692,10 @@ namespace DietPlannerAPI.Migrations
                         new
                         {
                             Id = 2,
-                            AccessCode = "2222",
-                            Age = 26,
-                            DailyCalorieGoal = 1700,
-                            DailyWaterGoalMl = 1800,
-                            Email = "kaloszkaaa@gmail.com",
-                            FullName = "Anna Kalosz",
+                            Age = 72,
+                            FullName = "Babcia Maria",
                             Gender = "Kobieta",
-                            HeightCm = 170
+                            HeightCm = 164
                         });
                 });
 
@@ -869,17 +817,6 @@ namespace DietPlannerAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("DietPlannerAPI.Models.HabitCompletion", b =>
-                {
-                    b.HasOne("DietPlannerAPI.Models.Goal", "Goal")
-                        .WithMany()
-                        .HasForeignKey("GoalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Goal");
                 });
 
             modelBuilder.Entity("DietPlannerAPI.Models.Meal", b =>

@@ -23,6 +23,7 @@ namespace DietPlannerAPI.Data
         public DbSet<BodyMeasurement> BodyMeasurements { get; set; }
         public DbSet<Goal> Goals { get; set; }
         public DbSet<WaterIntake> WaterIntakes { get; set; }
+        public DbSet<HabitCompletion> HabitCompletions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +44,54 @@ namespace DietPlannerAPI.Data
                 .Property(mi => mi.QuantityGrams)
                 .HasPrecision(8, 2);
 
+            modelBuilder.Entity<BodyMeasurement>()
+                .Property(bm => bm.WeightKg)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<BodyMeasurement>()
+                .Property(bm => bm.Bmi)
+                .HasPrecision(5, 2);
+
+            modelBuilder.Entity<Goal>()
+                .Property(g => g.TargetWeightKg)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Meal>()
+                .Property(m => m.Protein)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Meal>()
+                .Property(m => m.Carbs)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Meal>()
+                .Property(m => m.Fat)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Meal>()
+                .Property(m => m.Sugar)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Ingredient>()
+                .Property(i => i.Protein)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Ingredient>()
+                .Property(i => i.Carbs)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Ingredient>()
+                .Property(i => i.Fat)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<Ingredient>()
+                .Property(i => i.Sugar)
+                .HasPrecision(6, 2);
+
+            modelBuilder.Entity<HabitCompletion>()
+                .HasIndex(hc => new { hc.GoalId, hc.CompletionDate })
+                .IsUnique();
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Śniadanie" },
                 new Category { Id = 2, Name = "Obiad" },
@@ -58,17 +107,25 @@ namespace DietPlannerAPI.Data
                 {
                     Id = 1,
                     FullName = "Jan Testowy",
+                    Email = "jan.testowy@gmail.com",
+                    AccessCode = "1234",
                     Gender = "Mężczyzna",
                     Age = 28,
-                    HeightCm = 178
+                    HeightCm = 178,
+                    DailyCalorieGoal = 2000,
+                    DailyWaterGoalMl = 2000
                 },
                 new UserProfile
                 {
                     Id = 2,
-                    FullName = "Babcia Maria",
+                    FullName = "Anna Kalosz",
+                    Email = "kaloszkaaa@gmail.com",
+                    AccessCode = "2222",
                     Gender = "Kobieta",
-                    Age = 72,
-                    HeightCm = 164
+                    Age = 26,
+                    HeightCm = 170,
+                    DailyCalorieGoal = 1700,
+                    DailyWaterGoalMl = 1800
                 }
             );
 
@@ -111,18 +168,18 @@ namespace DietPlannerAPI.Data
             );
 
             modelBuilder.Entity<TimeSlot>().HasData(
-                new TimeSlot { Id = 1, StartTime = new DateTime(2026, 5, 10, 10, 0, 0), IsAvailable = false, DietitianId = 1 },
-                new TimeSlot { Id = 2, StartTime = new DateTime(2026, 5, 10, 12, 0, 0), IsAvailable = true, DietitianId = 1 },
-                new TimeSlot { Id = 3, StartTime = new DateTime(2026, 5, 11, 9, 0, 0), IsAvailable = true, DietitianId = 2 },
-                new TimeSlot { Id = 4, StartTime = new DateTime(2026, 5, 12, 10, 0, 0), IsAvailable = true, DietitianId = 1 },
-                new TimeSlot { Id = 5, StartTime = new DateTime(2026, 5, 12, 16, 0, 0), IsAvailable = true, DietitianId = 2 },
-                new TimeSlot { Id = 6, StartTime = new DateTime(2026, 5, 13, 11, 30, 0), IsAvailable = true, DietitianId = 1 },
-                new TimeSlot { Id = 7, StartTime = new DateTime(2026, 5, 14, 14, 0, 0), IsAvailable = true, DietitianId = 2 },
-                new TimeSlot { Id = 8, StartTime = new DateTime(2026, 5, 15, 9, 30, 0), IsAvailable = true, DietitianId = 1 }
+                new TimeSlot { Id = 1, StartTime = new DateTime(2026, 6, 3, 10, 0, 0), IsAvailable = false, DietitianId = 1 },
+                new TimeSlot { Id = 2, StartTime = new DateTime(2026, 6, 5, 12, 0, 0), IsAvailable = true, DietitianId = 1 },
+                new TimeSlot { Id = 3, StartTime = new DateTime(2026, 6, 8, 9, 0, 0), IsAvailable = true, DietitianId = 2 },
+                new TimeSlot { Id = 4, StartTime = new DateTime(2026, 6, 12, 10, 0, 0), IsAvailable = true, DietitianId = 1 },
+                new TimeSlot { Id = 5, StartTime = new DateTime(2026, 6, 18, 16, 0, 0), IsAvailable = true, DietitianId = 2 },
+                new TimeSlot { Id = 6, StartTime = new DateTime(2026, 7, 2, 11, 30, 0), IsAvailable = true, DietitianId = 1 },
+                new TimeSlot { Id = 7, StartTime = new DateTime(2026, 7, 9, 14, 0, 0), IsAvailable = true, DietitianId = 2 },
+                new TimeSlot { Id = 8, StartTime = new DateTime(2026, 7, 16, 9, 30, 0), IsAvailable = true, DietitianId = 1 }
             );
 
             modelBuilder.Entity<Appointment>().HasData(
-                new Appointment { Id = 1, PatientName = "Jan Testowy", AppointmentDate = new DateTime(2026, 5, 10, 10, 0, 0), DietitianId = 1, UserProfileId = 1 }
+                new Appointment { Id = 1, PatientName = "Jan Testowy", AppointmentDate = new DateTime(2026, 6, 3, 10, 0, 0), DietitianId = 1, UserProfileId = 1 }
             );
 
             modelBuilder.Entity<BodyMeasurement>().HasData(

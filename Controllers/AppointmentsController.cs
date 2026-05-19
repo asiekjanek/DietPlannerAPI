@@ -100,6 +100,11 @@ namespace DietPlannerAPI.Controllers
 
         private async Task SetTimeSlotAvailability(int dietitianId, DateTime appointmentDate, bool isAvailable)
         {
+            if (isAvailable && appointmentDate.Date < DateTime.Today)
+            {
+                return;
+            }
+
             var timeSlot = await _context.TimeSlots
                 .FirstOrDefaultAsync(ts => ts.DietitianId == dietitianId && ts.StartTime == appointmentDate);
 
